@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creating a Virtual Machine</title>
+    <link rel="shortcut icon" href="/src/how-to-create-a-VM/Icon.png" type="image/x-icon">
+
+    <!--    importing css    -->
+
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/iframe.css">
+    <link rel="stylesheet" href="/css/Creating-a-FTP-server.css">
+
+    <!--    importing fonts    -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    
+    <main>
+
+        <div class="home" onclick="location.href = 'https://kfellipe.github.io'"><img src="https://user-images.githubusercontent.com/82785675/182914993-d2e40521-a821-4557-8b02-14bdff8d2337.png" alt=""></div>
+
+        <h1>Creating a FTP Server</h1>
+
+        <section class="type-1 index">
+
+            <div class="tittle">Index</div>
+            <ul>
+                <li><a href="#Installing-the-proftpd-package">Installing-the-proftpd-package</a></li>
+                <li><a href="#Caging-the-users">Caging the users</a></li>
+                <li><a href="#Given-no-access-for-users-to-the-shell">Given no access for users to the shell</a></li>
+                <li><a href="#Adding-new-users">Adding new users</a></li>
+            </ul>
+        </section>
+
+        
+        <section class="type-1" id="Installing-the-proftpd-package">
+
+            <div class="tittle">Installing the proftpd package</div>
+
+            First, we will need to run <code>sudo apt update && sudo apt upgrade</code>.
+
+            <img src="https://user-images.githubusercontent.com/82785675/182910068-d8260ea2-1b0f-493a-a537-419fb8430d6f.PNG" alt="">
+
+            <br>Now, run the <code>sudo apt install proftpd -y</code>
+
+            <img src="https://user-images.githubusercontent.com/82785675/182910075-fbfcac7c-e080-4d21-a267-b193d6947cdd.PNG" alt="">
+
+        </section>
+
+        <section class="type-1" id="Caging-the-users">
+
+            <div class="tittle">Caging the users</div>
+
+            After install the proftpd, we need to cage all users in their own home directory. To do this, we edit the <i>/etc/proftpd/proftpd.conf</i> file, i will use nano to make this: <code>sudo nano /etc/proftpd/proftpd.conf</code><br>
+
+            <br>Find the line who starts with <code># DefaultRoot~</code> and replace to <code>DefaultRoot ~</code>
+
+            <img src="https://user-images.githubusercontent.com/82785675/182910076-8aed71e4-a08c-44cc-a0ea-654335f07667.PNG" alt=""><br>
+
+            After done, restart proftpd service <code>/etc/init.d/proftpd restart</code><br><br>
+
+            Now, the users who access the ftp server, will only see their own home directory.
+
+            <img src="https://user-images.githubusercontent.com/82785675/182910077-d39f1a04-3723-4e7c-b830-79fd637fba10.PNG" alt="">
+
+        </section>
+
+        <section class="type-1 " id="Given-no-access-for-users-to-the-shell">
+
+            <div class="tittle">Given no access for users to the shell</div>
+
+            First, we need to change the currently shell to the user <i><ins>ftp-server</ins></i>, to do this, we run the command <code>usermod -s /bin/false ftp-server</code> .This will deny the user to access the terminal by ssh for example.<br>
+
+            <img src="https://user-images.githubusercontent.com/82785675/182910079-c0418f52-d90a-4e8e-8790-a5781069a5c8.PNG" alt="">
+
+        
+        </section>
+
+        <section class="type-1" id="Adding-new-users">
+
+            <div class="tittle">Adding new users</div>
+
+            Every user who have a directory on home directory, are able to access the ftp service externaly, but, everytime we add a new user to the system, does not automatically create a directory in the home directory for it, we need to manually create a directory to him. We need to create a script to automate this process, the script will be like this: <br><br>
+            <code>
+            
+            #!/bin/bash
+            
+            <br>#-This will create the user passed by argument with the script
+            <br>useradd $1 -s /bin/false
+            <br>#-This will request a password for the new user
+            <br>passwd $1
+            <br>#-This will create the folder on directory /home
+            <br>mkdir /home/$1
+            <br>#-This will pass the owner permissions of the new folder to the new user
+            <br>chown $1 /home/$1
+            
+            </code>
+
+            <img src="https://user-images.githubusercontent.com/82785675/182910081-a98b8f7e-198e-41dc-8e57-1e1f06d10935.PNG" alt="">
+
+            <br>After that, add permission to excute the script to all <code>chmod a+x script.sh</code>
+
+            <br><br>After done the execution of the script, the user are accessible externaly.
+
+        </section>
+
+    </main>
+
+</body>
+</html>

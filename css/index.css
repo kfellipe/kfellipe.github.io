@@ -1,0 +1,114 @@
+@charset "UTF-8";
+
+body {
+    background: var(--background);
+    color: var(--fonts);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+main {
+    /* background: blue; */
+    width: 60%;
+}
+
+.page-tittle {
+    display: flex;
+    margin-top: 60px;
+    font-family: var(--roboto);
+    font-size: 33px;
+    border: white 4px solid;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    border-radius: 50px;
+    height: 60px;
+    width: 650px;
+    /* background: rgb(0, 255, 34); */
+}
+
+.sop {
+    margin-top: 75px;
+    display: flex;
+    flex-direction: row;
+    /* Temp */
+    /* background: green; */
+    /* Temp */
+}
+
+.icon {
+    /* background: red; */
+    height: 150px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid white;
+    border-radius: 25px;
+    grid-area: i;
+    cursor: pointer;
+    transform: scale(1);
+    background: rgba(0,0,0,0);
+    transition: transform .2s, background .2s;
+}
+
+.icon:hover {
+    transform: scale(1.1);
+    background: rgba(0,0,0,.2);
+}
+
+.icon > img {
+    
+    height: auto;
+    width: 80%;
+}
+
+.sop {
+    /* background: red; */
+    /* Temp */
+    width: 95%;
+    /* Temp */
+    display: grid;
+    grid-template-areas: "i t d"
+    "i c d";
+    grid-template-columns: 20% 25% 55%;
+    grid-template-rows: 50% 50%;
+    /*  t d
+        c d  */
+}
+
+/* ---->  divs for INFOS  <---- */
+
+.sop-info-categories {
+    grid-area: c;
+    width: 85%;
+    margin-left: 20px;
+    /* background: brown; */
+    border-top: 1px solid rgba(255, 255, 255, .5);
+    font-family: var(--roboto);
+    font-size: 11px;
+    padding-top: 10px;
+}
+
+.sop-info-tittle {
+    grid-area: t;
+    /* background: purple; */
+    font-family: Arial;
+    font-style: italic;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+.sop-info-description {
+    grid-area: d;
+    /* background: yellow; */
+    border-left: 1px solid rgba(255, 255, 255, .5);
+    font-size: 18px;
+    font-family: Calibri;
+    font-style: italic;
+    padding-left: 15px;
+}
+
