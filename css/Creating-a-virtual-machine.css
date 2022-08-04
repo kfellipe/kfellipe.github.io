@@ -1,9 +1,5 @@
 @charset "UTF-8";
 
-html {
-    background: var(--background)
-}
-
 body {
 
     color: white;
